@@ -84,12 +84,13 @@ speex-based rate converter plugin for ALSA.
 
 %prep
 %setup -q
+
+%build
 %{__libtoolize}
 %{__aclocal}
 %{__autoheader}
 %{__automake}
 %{__autoconf}
-%build
 %configure
 %{__make}
 
@@ -102,7 +103,7 @@ rm -rf $RPM_BUILD_ROOT
 install %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/alsa/alsa.conf.d/50-jack.conf
 install %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/alsa/alsa.conf.d/10-samplerate.conf
 
-mv ${RPM_BUILD_ROOT}%{_datadir}/alsa/alsa.conf.d/99-pulseaudio-default.conf{.example,}
+mv $RPM_BUILD_ROOT%{_datadir}/alsa/alsa.conf.d/99-pulseaudio-default.conf{.example,}
 
 rm -f $RPM_BUILD_ROOT%{_libdir}/alsa-lib/*.la
 rm -f $RPM_BUILD_ROOT%{_libdir}/alsa-lib/libasound_module_ctl_dsp_ctl.so
