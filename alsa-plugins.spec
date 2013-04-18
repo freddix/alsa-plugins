@@ -1,14 +1,15 @@
 # unpackaged:
 # /usr/lib*/alsa-lib/libasound_module_ctl_arcam_av.so
+# /usr/lib*/alsa-lib/libasound_module_pcm_usb_stream.so
 #
 Summary:	Advanced Linux Sound Architecture - plugins
 Name:		alsa-plugins
-Version:	1.0.26
+Version:	1.0.27
 Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	ftp://ftp.alsa-project.org/pub/plugins/%{name}-%{version}.tar.bz2
-# Source0-md5:	891b1fb4521e2292d6e0c1c23afc59c0
+# Source0-md5:	ada0163e0e84c787bfc929ad0f3f5cb8
 Source1:	%{name}-jack.conf
 Source2:	%{name}-samplerate.conf
 URL:		http://www.alsa-project.org/
@@ -16,7 +17,7 @@ BuildRequires:	alsa-lib-devel
 BuildRequires:	automake
 BuildRequires:	dbus-devel
 BuildRequires:	jack-audio-connection-kit-devel
-BuildRequires:	libav-devel
+#BuildRequires:	libav-devel
 BuildRequires:	libsamplerate-devel
 BuildRequires:	pkg-config
 BuildRequires:	speex-devel
@@ -91,7 +92,8 @@ speex-based rate converter plugin for ALSA.
 %{__autoheader}
 %{__automake}
 %{__autoconf}
-%configure
+%configure \
+	--disable-avcodec
 %{__make}
 
 %install
@@ -118,17 +120,18 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %dir %{_datadir}/alsa/alsa.conf.d
 
-%files a52
-%defattr(644,root,root,755)
-%doc doc/a52.txt
-%attr(755,root,root) %{_libdir}/alsa-lib/libasound_module_pcm_a52.so
-%attr(755,root,root) %{_libdir}/alsa-lib/libasound_module_pcm_usb_stream.so
-
 %files jack
 %defattr(644,root,root,755)
 %doc doc/README-jack
 %{_datadir}/alsa/alsa.conf.d/50-jack.conf
 %attr(755,root,root) %{_libdir}/alsa-lib/libasound_module_pcm_jack.so
+
+%if 0
+%files a52
+%defattr(644,root,root,755)
+%doc doc/a52.txt
+%attr(755,root,root) %{_libdir}/alsa-lib/libasound_module_pcm_a52.so
+%attr(755,root,root) %{_libdir}/alsa-lib/libasound_module_pcm_usb_stream.so
 
 %files lavcrate
 %defattr(644,root,root,755)
@@ -138,6 +141,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/alsa-lib/libasound_module_rate_lavcrate_faster.so
 %attr(755,root,root) %{_libdir}/alsa-lib/libasound_module_rate_lavcrate_high.so
 %attr(755,root,root) %{_libdir}/alsa-lib/libasound_module_rate_lavcrate_higher.so
+%endif
 
 %files mix
 %defattr(644,root,root,755)
