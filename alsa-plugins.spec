@@ -4,12 +4,12 @@
 #
 Summary:	Advanced Linux Sound Architecture - plugins
 Name:		alsa-plugins
-Version:	1.0.27
+Version:	1.0.28
 Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	ftp://ftp.alsa-project.org/pub/plugins/%{name}-%{version}.tar.bz2
-# Source0-md5:	ada0163e0e84c787bfc929ad0f3f5cb8
+# Source0-md5:	6fcbbb31e96f8ebc5fb926184a717aa4
 Source1:	%{name}-jack.conf
 Source2:	%{name}-samplerate.conf
 URL:		http://www.alsa-project.org/
