@@ -4,12 +4,12 @@
 #
 Summary:	Advanced Linux Sound Architecture - plugins
 Name:		alsa-plugins
-Version:	1.0.28
+Version:	1.0.29
 Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	ftp://ftp.alsa-project.org/pub/plugins/%{name}-%{version}.tar.bz2
-# Source0-md5:	6fcbbb31e96f8ebc5fb926184a717aa4
+# Source0-md5:	a66797b4471e3cbe96575207bfbe252c
 Source1:	%{name}-jack.conf
 Source2:	%{name}-samplerate.conf
 URL:		http://www.alsa-project.org/
@@ -17,7 +17,6 @@ BuildRequires:	alsa-lib-devel
 BuildRequires:	automake
 BuildRequires:	dbus-devel
 BuildRequires:	jack-audio-connection-kit-devel
-#BuildRequires:	libav-devel
 BuildRequires:	libsamplerate-devel
 BuildRequires:	pkg-config
 BuildRequires:	speex-devel
@@ -58,15 +57,6 @@ Group:		Libraries
 %description mix
 Up/down mixing plugins for ALSA.
 
-%package pulse
-Summary:	Up/down mixing plugins for PulseAudio
-Group:		Libraries
-Requires:	%{name} = %{version}-%{release}
-Requires:	pulseaudio
-
-%description pulse
-Up/down mixing plugins for PulseAudio.
-
 %package samplerate
 Summary:	libsamplerate-based rate converter plugin for ALSA
 Group:		Libraries
@@ -102,10 +92,9 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+install -d $RPM_BUILD_ROOT%{_datadir}/alsa/alsa.conf.d
 install %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/alsa/alsa.conf.d/50-jack.conf
 install %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/alsa/alsa.conf.d/10-samplerate.conf
-
-mv $RPM_BUILD_ROOT%{_datadir}/alsa/alsa.conf.d/99-pulseaudio-default.conf{.example,}
 
 rm -f $RPM_BUILD_ROOT%{_libdir}/alsa-lib/*.la
 rm -f $RPM_BUILD_ROOT%{_libdir}/alsa-lib/libasound_module_ctl_dsp_ctl.so
@@ -148,15 +137,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc doc/{upmix,vdownmix}.txt
 %attr(755,root,root) %{_libdir}/alsa-lib/libasound_module_pcm_upmix.so
 %attr(755,root,root) %{_libdir}/alsa-lib/libasound_module_pcm_vdownmix.so
-
-%files pulse
-%defattr(644,root,root,755)
-%doc doc/README-pulse
-%attr(755,root,root) %{_libdir}/alsa-lib/libasound_module_conf_pulse.so
-%attr(755,root,root) %{_libdir}/alsa-lib/libasound_module_ctl_pulse.so
-%attr(755,root,root) %{_libdir}/alsa-lib/libasound_module_pcm_pulse.so
-%{_datadir}/alsa/alsa.conf.d/50-pulseaudio.conf
-%{_datadir}/alsa/alsa.conf.d/99-pulseaudio-default.conf
 
 %files samplerate
 %defattr(644,root,root,755)
